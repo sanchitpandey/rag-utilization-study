@@ -1,0 +1,43 @@
+# configs/models.yaml
+# Model registry for the RAG Utilization Study
+
+local_models:
+  SmolLM2-360M:
+    hf_id: "HuggingFaceTB/SmolLM2-360M-Instruct"
+    params_B: 0.36
+    quantization: "4bit"          # BitsAndBytes nf4
+
+  Qwen2.5-1.5B:
+    hf_id: "Qwen/Qwen2.5-1.5B-Instruct"
+    params_B: 1.5
+    quantization: "4bit"
+
+  Qwen2.5-3B:
+    hf_id: "Qwen/Qwen2.5-3B-Instruct"
+    params_B: 3.0
+    quantization: "4bit"
+
+  Qwen2.5-7B:
+    hf_id: "Qwen/Qwen2.5-7B-Instruct"
+    params_B: 7.0
+    quantization: "4bit"
+
+api_models:
+  llama-3.1-8b:
+    provider: "groq"
+    model_id: "llama-3.1-8b-instant"
+    delay_s: 2.0
+
+  llama-3.3-70b:
+    provider: "groq"
+    model_id: "llama-3.3-70b-versatile"
+    delay_s: 4.0
+    
+dense_encoder:
+  hf_id: "intfloat/e5-large-v2"
+  dim: 1024
+  passage_prefix: "passage: "
+  query_prefix: "query: "
+  max_passage_len: 128
+  max_query_len: 64
+  batch_size: 256

@@ -1,0 +1,10 @@
+{"id": "nq_0", "question": "who played anakin skywalker in star wars the phantom menace", "answers": ["Jake Matthew Lloyd"], "dataset": "nq", "type": "factoid"}
+{"id": "nq_1", "question": "when did the roman republic become an empire", "answers": ["27 BC"], "dataset": "nq", "type": "factoid"}
+{"id": "nq_2", "question": "who had the most hits in mlb history", "answers": ["Pete Rose"], "dataset": "nq", "type": "factoid"}
+{"id": "hotpotqa_0", "question": "were scott derrickson and ed wood of the same nationality", "answers": ["yes"], "dataset": "hotpotqa", "type": "multi-hop"}
+{"id": "hotpotqa_1", "question": "what government position was held by the woman who portrayed meg in family guy", "answers": ["United States Secretary of State"], "dataset": "hotpotqa", "type": "multi-hop"}
+{"id": "popqa_0", "question": "what is the capital of france", "answers": ["Paris"], "dataset": "popqa", "type": "long-tail"}
+{"id": "popqa_1", "question": "what year was penicillin discovered", "answers": ["1928"], "dataset": "popqa", "type": "long-tail"}
+{"id": "nq_3", "question": "who is the author of the harry potter series", "answers": ["J.K. Rowling", "Joanne Rowling"], "dataset": "nq", "type": "factoid"}
+{"id": "hotpotqa_2", "question": "what is the name of the short film by the director of get out", "answers": ["Mouth"], "dataset": "hotpotqa", "type": "multi-hop"}
+{"id": "nq_4", "question": "what country is mount everest located in", "answers": ["Nepal", "Tibet"], "dataset": "nq", "type": "factoid"}

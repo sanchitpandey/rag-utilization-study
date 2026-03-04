@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.installed.cfg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Data (large files — store in remote storage, not Git)
+data/corpus/
+data/embeddings/
+data/results/
+data/grid_v2/
+data/grid_local/
+data/grid_api/
+data/none_predictions/
+data/*.jsonl
+data/*.parquet
+
+# Keep sample data
+!data/sample/
+
+# Model weights
+*.bin
+*.safetensors
+*.pt
+*.ckpt
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets / credentials
+.env
+.env.*
+secrets.yaml
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build outputs
+*.log
+
+# Keep directory structure but not generated outputs
+!results/figures/.gitkeep
+!results/.gitkeep

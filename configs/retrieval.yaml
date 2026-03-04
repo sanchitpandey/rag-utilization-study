@@ -1,0 +1,30 @@
+# configs/retrieval.yaml
+
+corpus:
+  source: "wikimedia/wikipedia"
+  date: "20231101.en"
+  target_passages: 500_000
+  sample_rate: 0.02             # deterministic hash-based 2% sample
+  chunk_max_words: 100
+  min_text_len: 100
+
+bm25:
+  stopwords: "en"
+  top_k: 20
+
+dense:
+  top_k: 20
+  faiss_index_type: "IndexFlatIP"
+  normalize_embeddings: true
+
+hybrid_rrf:
+  k: 60                          # Cormack et al. 2009 standard constant
+  top_k: 20
+  components:
+    - "bm25"
+    - "dense"
+
+oracle:
+  top_k: 20
+  synthetic_fallback: true       # use synthetic passages when corpus lacks the answer
+  boundary_match_bonus: 2.0      # extra score for word-boundary matches

@@ -1,0 +1,28 @@
+# Core ML / NLP
+torch>=2.1.0
+transformers>=4.40.0
+accelerate>=0.28.0
+bitsandbytes>=0.43.0
+sentencepiece>=0.1.99
+tokenizers>=0.15.0
+
+# Retrieval
+faiss-cpu>=1.7.4
+bm25s>=0.1.10
+
+# Embeddings / data
+datasets>=2.18.0
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=14.0.0
+
+# Statistics / visualisation
+scipy>=1.11.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# API-based experiments (optional)
+groq>=0.4.0
+
+# Progress / utilities
+tqdm>=4.66.0

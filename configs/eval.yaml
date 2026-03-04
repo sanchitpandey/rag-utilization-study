@@ -1,0 +1,45 @@
+# configs/eval.yaml
+
+datasets:
+  nq:
+    hf_id: "nq_open"
+    split: "train"              # NQ-Open has no separate test split
+    type: "factoid"
+    train: 2000
+    eval: 500
+
+  hotpotqa:
+    hf_id: "hotpot_qa"
+    config: "fullwiki"
+    split: "train"
+    type: "multi-hop"
+    train: 2000
+    eval: 500
+
+  popqa:
+    hf_id: "akariasai/PopQA"
+    split: "test"
+    type: "long-tail"
+    train: 1000
+    eval: 500
+
+# Main eval subset (NQ + HotpotQA only; PopQA excluded due to zero retrieval coverage)
+main_eval_datasets:
+  - "nq"
+  - "hotpotqa"
+
+generation:
+  max_new_tokens: 50
+  do_sample: false
+  max_context_passages: 5
+  max_input_tokens: 2048
+
+metrics:
+  - exact_match
+  - f1
+
+statistics:
+  bootstrap_n: 2000
+  bootstrap_ci: 0.95
+  bonferroni_n: 24              # number of McNemar's tests performed
+  alpha: 0.05
