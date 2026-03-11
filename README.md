@@ -2,7 +2,7 @@
 
 ### A controlled scaling study isolating retrieval utilization from retrieval quality using oracle retrieval and parametric knowledge splits.
 
-> **Preprint** — submitted to the *Workshop on Machine Reading for Question Answering (MRQA)* at ACL 2026 via ACL Rolling Review.
+> **Preprint** — Under Review at ACL Rolling Review.
 > This repository will be updated with the arXiv link and any revisions during review.
 
 This repository contains the full experimental code for our study on **retrieval-augmented generation (RAG) utilization** across model scales. We investigate a core question: *when a model is given a retrieved passage containing the correct answer, does it actually use it?*
