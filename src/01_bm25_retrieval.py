@@ -30,12 +30,8 @@ from tqdm import tqdm
 from utils import compute_hit_rate, load_jsonl, save_jsonl
 
 
-# ---------------------------------------------------------------------------
-# Corpus helpers
-# ---------------------------------------------------------------------------
-
 TARGET_PASSAGES = 500_000
-SAMPLE_RATE = 0.02          # deterministic 2 % sample of ~6.7M articles ≈ 134k articles
+SAMPLE_RATE = 0.02
 MIN_TEXT_LEN = 100
 MAX_CHUNK_WORDS = 100
 
@@ -93,9 +89,7 @@ def build_corpus(corpus_output: str) -> list[dict]:
     return passages
 
 
-# ---------------------------------------------------------------------------
 # BM25 index & retrieval
-# ---------------------------------------------------------------------------
 
 def build_and_retrieve(
     passages: list[dict],
@@ -146,9 +140,7 @@ def build_and_retrieve(
     return results
 
 
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="BM25 corpus build + retrieval.")

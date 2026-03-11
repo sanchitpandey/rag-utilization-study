@@ -75,7 +75,7 @@ rag-utilization-study/
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/sanchitpandey/rag-utilization-study.git
+git clone https://anonymous.4open.science/r/rag-utilization-study-C67F.git
 cd rag-utilization-study
 pip install -r requirements.txt
 pip install -r requirements-dev.txt   # for running tests
@@ -99,16 +99,17 @@ export HF_TOKEN="your_token_here"
 export GROQ_API_KEY="your_key_here"
 ```
 
-> **Security note:** Never hardcode API keys in scripts. The repository reads keys exclusively from environment variables.
-
 ### 4. Hardware Requirements
 
-| Step | Minimum | Recommended |
+All experiments were run on **free-tier Kaggle T4 GPUs** (16GB VRAM).
+No paid compute is required to reproduce this paper.
+
+| Step | Hardware Used |
 |---|---|---|
-| BM25 retrieval | 16 GB RAM | 32 GB RAM |
-| Dense embedding (500k passages) | 1× A100 40GB | 1× A100 80GB |
-| Local model eval (7B, 4-bit) | 1× A100 40GB | 1× A100 80GB |
-| Full pipeline | ~6 hours | ~3 hours |
+| BM25 retrieval (500k passages) | Kaggle T4 (CPU) |
+| Dense embedding (500k passages) | Kaggle T4 GPU |
+| Local model eval (4-bit, up to 7B) | Kaggle T4 GPU |
+| Full pipeline (all notebooks) | Kaggle T4 GPU |
 
 ---
 
@@ -280,8 +281,6 @@ All local models are loaded in 4-bit NF4 quantization via BitsAndBytes. A CUDA-c
 | llama-3.1-8b-instant | Groq |
 | llama-3.3-70b-versatile | Groq |
 
-> **Note:** The `openai/gpt-oss-20b` and `openai/gpt-oss-120b` model IDs returned null predictions during our preliminary experiments and are not used in any reported result.
-
 ### Retrieval Model
 - **Dense encoder**: [intfloat/e5-large-v2](https://huggingface.co/intfloat/e5-large-v2) (1024-dim)
 - **Index**: FAISS `IndexFlatIP` with L2-normalised embeddings
@@ -303,12 +302,11 @@ All local models are loaded in 4-bit NF4 quantization via BitsAndBytes. A CUDA-c
 This paper is currently under review. If you use this code or data, please cite:
 
 ```bibtex
-@unpublished{pandey2026smalllmrag,
+@unpublished{anonymous2026smalllmrag,
   title   = {Can Small Language Models Use What They Retrieve?},
-  author  = {Pandey, Sanchit},
+  author  = {Anonymous},
   year    = {2026},
-  note    = {Submitted to MRQA @ ACL 2026 via ACL Rolling Review.
-             Preprint: https://arxiv.org/abs/XXXX.XXXXX},
+  note    = {Under Review},
 }
 ```
 

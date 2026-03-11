@@ -10,11 +10,6 @@ import pytest
 from utils import normalize_answer, exact_match, f1_score, bootstrap_ci
 import numpy as np
 
-
-# ---------------------------------------------------------------------------
-# normalize_answer
-# ---------------------------------------------------------------------------
-
 class TestNormalizeAnswer:
     def test_lowercase(self):
         assert normalize_answer("United States") == "united states"
@@ -33,11 +28,6 @@ class TestNormalizeAnswer:
 
     def test_empty_string(self):
         assert normalize_answer("") == ""
-
-
-# ---------------------------------------------------------------------------
-# exact_match
-# ---------------------------------------------------------------------------
 
 class TestExactMatch:
     def test_exact(self):
@@ -62,11 +52,6 @@ class TestExactMatch:
     def test_27_bc(self):
         assert exact_match("27 BC", ["27 BC"]) == 1.0
 
-
-# ---------------------------------------------------------------------------
-# f1_score
-# ---------------------------------------------------------------------------
-
 class TestF1Score:
     def test_exact_match_f1(self):
         assert f1_score("Pete Rose", ["Pete Rose"]) == 1.0
@@ -86,11 +71,6 @@ class TestF1Score:
 
     def test_empty_prediction(self):
         assert f1_score("", ["Paris"]) == 0.0
-
-
-# ---------------------------------------------------------------------------
-# bootstrap_ci
-# ---------------------------------------------------------------------------
 
 class TestBootstrapCI:
     def test_all_zeros(self):

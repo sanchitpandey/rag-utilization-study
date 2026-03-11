@@ -31,17 +31,17 @@ from transformers import AutoModel, AutoTokenizer
 from tqdm import tqdm
 
 from utils import compute_hit_rate, load_jsonl, save_jsonl
+import yaml
+with open("configs/models.yaml") as f:
+    cfg = yaml.safe_load(f)["retrieval"]["dense_encoder"]
 
-MODEL_NAME = "intfloat/e5-large-v2"
-BATCH_SIZE = 256
-MAX_PASSAGE_LEN = 128
-MAX_QUERY_LEN = 64
+MODEL_NAME = cfg["hf_id"]
+BATCH_SIZE = cfg["batch_size"]
+MAX_PASSAGE_LEN = cfg["max_passage_len"]
+MAX_QUERY_LEN = cfg["max_query_len"]
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-
-# ---------------------------------------------------------------------------
 # Encoding
-# ---------------------------------------------------------------------------
 
 def load_encoder(model_name: str = MODEL_NAME):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -92,7 +92,6 @@ def encode_corpus(
         print(f"Loading existing embeddings from {embeddings_path}…")
         return np.load(embeddings_path)
 
-    # Sort by length to minimise padding overhead
     length_sorted_idx = sorted(range(len(passages)), key=lambda i: len(passages[i]["text"]))
     inv_idx = [0] * len(passages)
     for new_pos, old_pos in enumerate(length_sorted_idx):
@@ -114,10 +113,7 @@ def encode_corpus(
     print(f"Embeddings saved → {embeddings_path} ({time.time() - t0:.0f}s, {os.path.getsize(embeddings_path)/1e9:.2f} GB)")
     return embeddings
 
-
-# ---------------------------------------------------------------------------
 # FAISS index
-# ---------------------------------------------------------------------------
 
 def build_faiss_index(embeddings: np.ndarray, index_path: str) -> faiss.Index:
     if os.path.exists(index_path):
@@ -133,10 +129,7 @@ def build_faiss_index(embeddings: np.ndarray, index_path: str) -> faiss.Index:
     print(f"FAISS index saved → {index_path} ({index.ntotal} vectors, dim={dim})")
     return index
 
-
-# ---------------------------------------------------------------------------
 # Retrieval
-# ---------------------------------------------------------------------------
 
 def retrieve_dense(
     eval_data: list[dict],
@@ -183,10 +176,7 @@ def retrieve_dense(
 
     return results
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Dense retrieval with E5-large-v2 + FAISS.")
@@ -226,7 +216,6 @@ def main() -> None:
 
     compute_hit_rate(results, label="Dense (E5-large-v2)")
 
-    # Free GPU memory
     del model
     torch.cuda.empty_cache()
     gc.collect()

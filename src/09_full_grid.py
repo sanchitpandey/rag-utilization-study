@@ -41,9 +41,7 @@ from utils import exact_match, f1_score, load_jsonl, save_jsonl
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-# ---------------------------------------------------------------------------
 # Config
-# ---------------------------------------------------------------------------
 
 MODELS: dict[str, str] = {
     "SmolLM2-360M": "HuggingFaceTB/SmolLM2-360M-Instruct",
@@ -60,10 +58,6 @@ BNB_CONFIG = BitsAndBytesConfig(
 ) if torch.cuda.is_available() else None
 
 
-# ---------------------------------------------------------------------------
-# Prompt
-# ---------------------------------------------------------------------------
-
 def build_prompt(question: str, passages: list[dict], max_passages: int = 5) -> str:
     if not passages:
         return (
@@ -79,10 +73,7 @@ def build_prompt(question: str, passages: list[dict], max_passages: int = 5) -> 
         f"Context:\n{ctx}\n\nQuestion: {question}\nAnswer:"
     )
 
-
-# ---------------------------------------------------------------------------
 # Inference
-# ---------------------------------------------------------------------------
 
 def run_inference(
     model,
@@ -105,10 +96,7 @@ def run_inference(
     answer = tokenizer.decode(generated, skip_special_tokens=True).strip().split("\n")[0].strip()
     return answer, input_len
 
-
-# ---------------------------------------------------------------------------
-# Argument parsing
-# ---------------------------------------------------------------------------
+# Main
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Full 4×3 evaluation grid.")
@@ -126,11 +114,6 @@ def parse_args() -> argparse.Namespace:
         choices=list(MODELS.keys()),
     )
     return p.parse_args()
-
-
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
 
 def main() -> None:
     args = parse_args()
@@ -160,9 +143,7 @@ def main() -> None:
         "oracle": oracle_lookup,
     }
 
-    # ------------------------------------------------------------------ #
     # Grid run
-    # ------------------------------------------------------------------ #
     for model_name in args.models:
         model_id = MODELS[model_name]
         conditions_todo = []
@@ -264,9 +245,6 @@ def main() -> None:
         gc.collect()
         print(f"Unloaded {model_name}")
 
-    # ------------------------------------------------------------------ #
-    # Consolidate
-    # ------------------------------------------------------------------ #
     all_results = []
     for f in sorted(glob.glob(os.path.join(args.output_dir, "*.jsonl"))):
         data = load_jsonl(f)

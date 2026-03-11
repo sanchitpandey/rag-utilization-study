@@ -41,10 +41,7 @@ MODELS: dict[str, str] = {
     "Qwen2.5-3B": "Qwen/Qwen2.5-3B-Instruct",
 }
 
-
-# ---------------------------------------------------------------------------
 # Prompts (three variants for ablation study)
-# ---------------------------------------------------------------------------
 
 def build_prompt_v1(question: str, passages: list[dict], max_passages: int = 5) -> str:
     """Forced: 'answer based on context'."""
@@ -95,10 +92,7 @@ PROMPT_VARIANTS = {
     "v3_minimal": build_prompt_v3,
 }
 
-
-# ---------------------------------------------------------------------------
 # Inference
-# ---------------------------------------------------------------------------
 
 def run_inference(model, tokenizer, prompt: str, max_new_tokens: int = 50) -> tuple[str, int]:
     inputs = tokenizer(
@@ -130,10 +124,7 @@ def load_model(model_id: str):
         tokenizer.pad_token = tokenizer.eos_token
     return model, tokenizer
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Local model scaling grid (preliminary).")

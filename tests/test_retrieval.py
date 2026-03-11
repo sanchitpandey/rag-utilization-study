@@ -36,11 +36,6 @@ SAMPLE_RESULTS = [
     },
 ]
 
-
-# ---------------------------------------------------------------------------
-# answer_in_passages
-# ---------------------------------------------------------------------------
-
 class TestAnswerInPassages:
     def test_answer_present(self):
         assert answer_in_passages(["Paris"], SAMPLE_PASSAGES, k=20) is True
@@ -61,11 +56,6 @@ class TestAnswerInPassages:
     def test_case_insensitive(self):
         assert answer_in_passages(["paris"], SAMPLE_PASSAGES, k=20) is True
 
-
-# ---------------------------------------------------------------------------
-# compute_hit_rate (smoke test)
-# ---------------------------------------------------------------------------
-
 class TestComputeHitRate:
     def test_runs_without_error(self):
         buf = StringIO()
@@ -82,11 +72,6 @@ class TestComputeHitRate:
         output = buf.getvalue()
         # The all-datasets row should show 66.7% (2/3 hits)
         assert "66.7" in output or "67" in output
-
-
-# ---------------------------------------------------------------------------
-# RRF fusion
-# ---------------------------------------------------------------------------
 
 import importlib.util as _ilu
 import sys as _sys
@@ -105,7 +90,6 @@ def _load_hybrid_module():
     mod = _ilu.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
-
 
 class TestRRFFusion:
     def test_rrf_merges_results(self):

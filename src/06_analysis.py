@@ -127,10 +127,7 @@ def plot_context_length(df: pd.DataFrame, output_dir: str) -> None:
     plt.close(fig)
     print(f"Saved → {path}")
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Retrieval scaling curve analysis.")

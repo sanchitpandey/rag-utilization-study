@@ -102,7 +102,7 @@ def main() -> None:
         model_id = MODELS[model_name]
         out_path = os.path.join(args.none_preds_dir, f"none__{model_name}.jsonl")
 
-        # ---- load existing predictions if available ----
+        # load existing predictions if available
         if os.path.exists(out_path):
             existing = load_jsonl(out_path)
             existing_ids = {r["id"] for r in existing}
@@ -115,7 +115,6 @@ def main() -> None:
                 }
                 continue
 
-        # ---- run inference ----
         print(f"\n[{model_name}] Loading model…")
         tokenizer = AutoTokenizer.from_pretrained(model_id)
         load_kwargs: dict = {"device_map": "auto"} if DEVICE == "cuda" else {}

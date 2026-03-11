@@ -3,11 +3,11 @@ message: "If you use this code or data, please cite the preprint below."
 type: software
 title: "rag-utilization-study: Code for 'Can Small Language Models Use What They Retrieve?'"
 authors:
-  - family-names: "Pandey"
-    given-names: "Sanchit"
+  - family-names: "Author"
+    given-names: "Anonymous"
 year: 2026
 license: MIT
-repository-code: "https://github.com/sanchitpandey/rag-utilization-study"
+repository-code: "https://anonymous.4open.science/r/rag-utilization-study-C67F"
 abstract: >-
   We study when retrieval-augmented generation actually helps, by evaluating
   four open-weight language models (360M–7B parameters) under three retrieval
@@ -21,10 +21,8 @@ preferred-citation:
   type: unpublished
   title: "Can Small Language Models Use What They Retrieve?"
   authors:
-    - family-names: "Pandey"
-      given-names: "Sanchit"
+    - family-names: "Author"
+      given-names: "Anonymous"
   year: 2026
   notes: >-
-    Submitted to the Workshop on Machine Reading for Question Answering
-    (MRQA) at ACL 2026 via ACL Rolling Review. Preprint available at
-    https://arxiv.org/abs/XXXX.XXXXX.
+    Under Review

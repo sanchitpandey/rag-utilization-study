@@ -51,10 +51,7 @@ LABELS = {"none": "No retrieval", "noisy": "Dense retrieval", "oracle": "Oracle 
 
 BONFERRONI_N = 24
 
-
-# ---------------------------------------------------------------------------
-# Bootstrap CI computation
-# ---------------------------------------------------------------------------
+# Bootstrap CI
 
 def compute_all_cis(df_corpus: pd.DataFrame) -> pd.DataFrame:
     np.random.seed(42)
@@ -82,10 +79,7 @@ def compute_all_cis(df_corpus: pd.DataFrame) -> pd.DataFrame:
                     )
     return pd.DataFrame(ci_results)
 
-
-# ---------------------------------------------------------------------------
 # McNemar's test
-# ---------------------------------------------------------------------------
 
 def mcnemar_test(em_a: np.ndarray, em_b: np.ndarray) -> tuple[float, int, int]:
     b_only = ((em_a == 0) & (em_b == 1)).sum()
@@ -141,10 +135,7 @@ def run_significance_tests(df_corpus: pd.DataFrame) -> pd.DataFrame:
                 )
     return pd.DataFrame(sig_results)
 
-
-# ---------------------------------------------------------------------------
 # Figures
-# ---------------------------------------------------------------------------
 
 def figure1_scaling_curves(ci_df: pd.DataFrame, output_dir: str) -> None:
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
@@ -285,10 +276,7 @@ def figure3_distraction(ci_df: pd.DataFrame, output_dir: str) -> None:
     plt.close(fig)
     print("Saved figure3_distraction")
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Statistical analysis and figure generation.")

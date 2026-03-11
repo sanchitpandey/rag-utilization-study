@@ -24,10 +24,7 @@ from utils import compute_hit_rate, load_jsonl, save_jsonl
 
 RRF_K = 60  # Standard RRF constant
 
-
-# ---------------------------------------------------------------------------
 # Fusion
-# ---------------------------------------------------------------------------
 
 def reciprocal_rank_fusion(
     bm25_results: list[dict],
@@ -76,43 +73,7 @@ def reciprocal_rank_fusion(
 
     return hybrid_results
 
-
-# ---------------------------------------------------------------------------
-# Latency benchmark
-# ---------------------------------------------------------------------------
-
-def benchmark_latency(
-    bm25_results: list[dict],
-    corpus_texts: list[str],
-    index: faiss.Index | None = None,
-    n_samples: int = 100,
-) -> None:
-    sample_queries = [ex["question"] for ex in bm25_results[:n_samples]]
-
-    t0 = time.time()
-    q_tokens = bm25s.tokenize(sample_queries, stopwords="en")
-    corpus_tokens = bm25s.tokenize(corpus_texts[:1000], stopwords="en")  # tiny warm-up
-    retriever = bm25s.BM25()
-    retriever.index(corpus_tokens)
-    retriever.retrieve(q_tokens[:5], k=20)  # just for latency estimate
-    bm25_time = (time.time() - t0) / n_samples * 1000
-    print(f"BM25:          ~{bm25_time:.1f} ms/query (estimated)")
-
-    if index is not None:
-        dummy = np.random.randn(n_samples, 1024).astype("float32")
-        faiss.normalize_L2(dummy)
-        t0 = time.time()
-        for i in range(n_samples):
-            index.search(dummy[i : i + 1], 20)
-        faiss_time = (time.time() - t0) / n_samples * 1000
-        print(f"FAISS search:  ~{faiss_time:.1f} ms/query")
-        print(f"Dense total:   ~{faiss_time + 50:.1f} ms/query (+ ~50ms E5 encoding)")
-        print(f"Hybrid total:  ~{bm25_time + faiss_time + 50:.1f} ms/query")
-
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Hybrid RRF fusion of BM25 + Dense.")
@@ -137,10 +98,9 @@ def main() -> None:
     save_jsonl(args.output, hybrid_results)
     print(f"Saved hybrid results → {args.output}")
 
-    compute_hit_rate(bm25_res, label="Level 1: BM25")
-    compute_hit_rate(dense_res, label="Level 2: Dense (E5)")
-    compute_hit_rate(hybrid_results, label="Level 3: Hybrid RRF")
-
+    compute_hit_rate(bm25_res, label="BM25")
+    compute_hit_rate(dense_res, label="Dense (E5)")
+    compute_hit_rate(hybrid_results, label="Hybrid RRF")
 
 if __name__ == "__main__":
     main()

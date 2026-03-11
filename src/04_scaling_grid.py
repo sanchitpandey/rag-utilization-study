@@ -39,10 +39,6 @@ from tqdm import tqdm
 
 from utils import exact_match, f1_score, load_jsonl, save_jsonl
 
-# ---------------------------------------------------------------------------
-# Model registry
-# ---------------------------------------------------------------------------
-
 MODELS: dict[str, str] = {
     "llama-3.1-8b": "llama-3.1-8b-instant",
     "llama-3.3-70b": "llama-3.3-70b-versatile",
@@ -54,11 +50,6 @@ MODEL_DELAYS: dict[str, float] = {
 }
 
 EVAL_SUBSET = 200
-
-
-# ---------------------------------------------------------------------------
-# Prompt
-# ---------------------------------------------------------------------------
 
 def build_qa_prompt(question: str, passages: list[dict], max_passages: int = 5) -> str:
     if not passages:
@@ -76,9 +67,7 @@ def build_qa_prompt(question: str, passages: list[dict], max_passages: int = 5) 
     )
 
 
-# ---------------------------------------------------------------------------
 # API call with retry + backoff
-# ---------------------------------------------------------------------------
 
 def call_groq(
     client: Groq,
@@ -105,10 +94,7 @@ def call_groq(
                 time.sleep(1)
     return ""
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="API-based preliminary scaling grid.")
@@ -193,7 +179,6 @@ def main() -> None:
             all_results.extend(batch)
             print(f"  Saved {len(batch)} results → {outfile}")
 
-    # Consolidate
     df = pd.DataFrame(all_results)
     df.to_csv(os.path.join(args.output_dir, "full_grid.csv"), index=False)
 
@@ -204,7 +189,7 @@ def main() -> None:
     )
     summary.to_csv(os.path.join(args.output_dir, "grid_summary.csv"), index=False)
 
-    print(f"\nConsolidated {len(df)} rows → {args.output_dir}/full_grid.csv")
+    print(f"\nSaved {len(df)} rows → {args.output_dir}/full_grid.csv")
 
     print("\n===== EM by Retrieval × Model =====")
     pivot = df.pivot_table(values="em", index="retrieval", columns="model", aggfunc="mean")

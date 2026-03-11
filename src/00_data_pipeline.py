@@ -27,10 +27,6 @@ from datasets import load_dataset
 from tqdm import tqdm
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
 def make_example(
     idx: int,
     question: str,
@@ -54,9 +50,7 @@ def save_jsonl(path: str, data: list[dict]) -> None:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
-# ---------------------------------------------------------------------------
 # Dataset loaders
-# ---------------------------------------------------------------------------
 
 def load_nq_open(
     train_target: int = 2000,
@@ -119,9 +113,7 @@ def load_popqa(
     return train, eval_
 
 
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Build train/eval JSONL splits.")

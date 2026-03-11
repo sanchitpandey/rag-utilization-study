@@ -26,11 +26,6 @@ from tqdm import tqdm
 
 from utils import compute_hit_rate, load_jsonl, save_jsonl
 
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
 def build_answer_index(
     corpus_texts_lower: np.ndarray,
     all_answers: set[str],
@@ -46,7 +41,6 @@ def build_answer_index(
             answer_to_passages[match].append(idx)
 
     return answer_to_passages
-
 
 def select_best_passage(
     passage_indices: list[int],
@@ -95,9 +89,7 @@ def make_synthetic_passage(question: str, answer: str) -> dict:
     return {"id": "synthetic", "title": "Synthetic Oracle", "text": text, "score": 100.0}
 
 
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Build oracle retrieval results.")
@@ -134,9 +126,6 @@ def main() -> None:
     coverage = len(answer_to_passages) / len(all_answers) * 100
     print(f"  Coverage: {len(answer_to_passages)}/{len(all_answers)} ({coverage:.1f}%)")
 
-    # ------------------------------------------------------------------ #
-    # Select best passage per question
-    # ------------------------------------------------------------------ #
     oracle_passages: dict[str, dict] = {}
     missing_ids: list[str] = []
 
@@ -191,9 +180,7 @@ def main() -> None:
     else:
         print(f"Synthetic rate {pct_synthetic:.1f}% — acceptable (<10%).")
 
-    # ------------------------------------------------------------------ #
     # Build final results (oracle passage first, then dense fill)
-    # ------------------------------------------------------------------ #
     oracle_results = []
     for ex in eval_data:
         oracle_info = oracle_passages[ex["id"]]
@@ -218,9 +205,6 @@ def main() -> None:
             }
         )
 
-    # ------------------------------------------------------------------ #
-    # Save + validate
-    # ------------------------------------------------------------------ #
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
     save_jsonl(args.output, oracle_results)
     print(f"Saved oracle results → {args.output}")

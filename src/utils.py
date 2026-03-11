@@ -19,10 +19,7 @@ from typing import Any
 
 import numpy as np
 
-
-# ---------------------------------------------------------------------------
 # I/O
-# ---------------------------------------------------------------------------
 
 def load_jsonl(path: str) -> list[dict]:
     with open(path, encoding="utf-8") as f:
@@ -44,10 +41,7 @@ def save_json(path: str, data: Any, indent: int = 2) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=indent, ensure_ascii=False)
 
-
-# ---------------------------------------------------------------------------
-# Answer normalization (SQuAD-style)
-# ---------------------------------------------------------------------------
+# Answer normalization
 
 def normalize_answer(s: str) -> str:
     """Lowercase, strip articles/punctuation, collapse whitespace."""
@@ -56,10 +50,7 @@ def normalize_answer(s: str) -> str:
     s = s.translate(str.maketrans("", "", string.punctuation))
     return " ".join(s.split())
 
-
-# ---------------------------------------------------------------------------
 # Metrics
-# ---------------------------------------------------------------------------
 
 def exact_match(prediction: str, gold_answers: list[str]) -> float:
     """Return 1.0 if normalized prediction matches any normalized gold answer."""
@@ -94,10 +85,7 @@ def answer_in_passages(answers: list[str], passages: list[dict], k: int = 20) ->
     text = " ".join(p["text"] for p in passages[:k]).lower()
     return any(a.lower() in text for a in answers)
 
-
-# ---------------------------------------------------------------------------
 # Hit-rate table
-# ---------------------------------------------------------------------------
 
 def compute_hit_rate(
     results: list[dict],
@@ -132,10 +120,7 @@ def compute_hit_rate(
         row += f" {counts[dataset]:>6}"
         print(row)
 
-
-# ---------------------------------------------------------------------------
 # Bootstrap CI
-# ---------------------------------------------------------------------------
 
 def bootstrap_ci(
     scores: list[float] | np.ndarray,

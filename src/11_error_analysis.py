@@ -110,10 +110,7 @@ REFUSAL_PHRASES = [
     "not sure",
 ]
 
-
-# ---------------------------------------------------------------------------
-# Text utilities (self-contained — no dependency on utils.py at import time)
-# ---------------------------------------------------------------------------
+# Text utilities
 
 def normalize_answer(s: str) -> str:
     s = str(s).lower().strip()
@@ -150,9 +147,7 @@ def parse_gold_answers(raw) -> list[str]:
     return [str(raw)]
 
 
-# ---------------------------------------------------------------------------
 # Error classifier
-# ---------------------------------------------------------------------------
 
 def classify_failure(
     pred: str,
@@ -197,10 +192,7 @@ def classify_failure(
 
     return "Irrelevant"
 
-
-# ---------------------------------------------------------------------------
 # Data loading
-# ---------------------------------------------------------------------------
 
 def load_corpus_grid(path: str) -> pd.DataFrame:
     df = pd.read_csv(path)
@@ -221,10 +213,7 @@ def load_oracle_passages(oracle_path: str) -> dict[str, str]:
                 passage_lookup[ex["id"]] = retrieved[0].get("text", "")
     return passage_lookup
 
-
-# ---------------------------------------------------------------------------
 # Classification loop
-# ---------------------------------------------------------------------------
 
 def build_taxonomy(
     df: pd.DataFrame,
@@ -257,10 +246,7 @@ def build_taxonomy(
     failures["error_category"] = categories
     return failures
 
-
-# ---------------------------------------------------------------------------
 # Summary table
-# ---------------------------------------------------------------------------
 
 def build_summary(failures: pd.DataFrame) -> pd.DataFrame:
     """Compute % breakdown per model (rows=category, cols=model)."""
@@ -283,10 +269,7 @@ def build_summary(failures: pd.DataFrame) -> pd.DataFrame:
             })
     return pd.DataFrame(rows)
 
-
-# ---------------------------------------------------------------------------
 # Figures
-# ---------------------------------------------------------------------------
 
 def figure4_heatmap(summary: pd.DataFrame, output_dir: str) -> None:
     pivot = summary.pivot(index="category", columns="model", values="pct")
@@ -373,10 +356,7 @@ def figure5_stacked(summary: pd.DataFrame, output_dir: str) -> None:
     plt.close(fig)
     print("Saved figure5_error_stacked")
 
-
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Oracle failure taxonomy analysis.")
